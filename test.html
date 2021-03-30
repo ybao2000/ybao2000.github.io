@@ -1,0 +1,54 @@
+<!-- html is the some markups -->
+<html>
+  <canvas id="canvas" width="400" height="500" style="border: 1px solid black;"></canvas>
+</html>
+
+<!-- script is the place we write the code -->
+<!-- we are using javascript -->
+<script>
+  // we get the context from html
+  var ctx = document.getElementById("canvas").getContext("2d");
+
+  // settings
+  // when we write something, we need specify what font, what color, and size
+  ctx.font = "30px Arial";  // set the text font
+  ctx.fillStyle = "blue";    // set the text color
+  ctx.strokeStyle = "purple";  // set the color for lines
+
+  // we are going to write something
+  ctx.fillText("Aircraft war", 100, 100);
+
+  // draw some line
+  ctx.moveTo(100, 100);
+  ctx.lineTo(300, 400);
+  ctx.stroke();
+
+  // draw rectange
+  ctx.strokeStyle = "green";
+  ctx.beginPath();      // reset the stroke
+  ctx.rect(100, 100, 100, 100);
+  ctx.stroke();
+
+  // fill the rectange
+  ctx.fillStyle = "red";
+  ctx.fillRect(200, 100, 100, 100);
+
+  // draw a circle
+  ctx.beginPath();
+  ctx.strokeStyle = "orange";
+  ctx.arc(100, 300, 50, 0, 2*Math.PI)  // angle should be using radian.
+  ctx.stroke();
+
+  // fill a circle
+  ctx.fillStyle = "cyan";
+  ctx.beginPath();
+  ctx.moveTo(300, 350);
+  ctx.lineTo(300, 300);
+  ctx.lineTo(350, 300);
+  ctx.arc(300, 300, 50, 0, Math.PI/2);
+  ctx.fill();
+
+  // clean up
+  ctx.clearRect(200, 200, 200, 100);
+</script>
+

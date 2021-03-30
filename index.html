@@ -1,0 +1,52 @@
+<!-- html is the some markups -->
+<html>
+  <canvas id="canvas" width="400" height="500" style="border: 1px solid black;"></canvas>
+</html>
+
+<!-- script is the place we write the code -->
+<!-- we are using javascript -->
+<script>
+  // we get the context from html
+  var ctx = document.getElementById("canvas").getContext("2d");
+  var WIDTH = 400;
+  var HEIGHT = 500;
+
+  // draw background
+  // var img_background = new Image();
+  // img_background.src = "img/background1.jpg";
+  // img_background.onload = function() {
+  //   ctx.drawImage(img_background, 0, 0, WIDTH, HEIGHT);
+  // }
+
+  // player
+  var x_player = 180;
+  var y_player = 400;
+  var img_player = new Image();
+  img_player.src = "img/player.png";
+  img_player.onload = function() {
+    ctx.drawImage(img_player, x_player, y_player, 60, 40);
+  }
+
+  //enemy1
+  var x_enemy1 = 50;
+  var y_enemy1 = 50;
+  var img_enemy1 = new Image();
+  img_enemy1.src = "img/enemy1.png";
+  img_enemy1.onload = function() {
+    ctx.drawImage(img_enemy1, x_enemy1, y_enemy1, 60, 40);
+  }
+
+  // we need to move the player and enemy1
+  setInterval(update, 40);  // 40 milli-seconds, 1 second = 1000 ms, 1 sec => 25 times
+
+  function update() {
+    // update player
+    y_player -= 50;
+    ctx.drawImage(img_player, x_player, y_player, 60, 40);
+
+    // update enemy1
+    y_enemy1 += 50;
+    ctx.drawImage(img_enemy1, x_enemy1, y_enemy1, 60, 40);    
+  }
+</script>
+
