@@ -49,10 +49,18 @@
       this.img.src = src;
     }
   }
+  // var enemy1 = new Enemy(1, 50, 0, 5, "img/enemy1.png", 28, 35);
+  // var enemy2 = new Enemy(2, 150, 0, 3, "img/enemy2.png", 45, 35);
+  // var enemy3 = new Enemy(3, 250, 0, 2, "img/boss.png", 106, 104);
+  var enemyList = {};
 
-  var enemy1 = new Enemy(1, 50, 0, 5, "img/enemy1.png", 28, 35);
-  var enemy2 = new Enemy(2, 150, 0, 3, "img/enemy2.png", 45, 35);
-  var enemy3 = new Enemy(3, 250, 0, 2, "img/boss.png", 106, 104);
+  function addEnemy(id, x, y, speed, src, width, height){
+    var enemy = new Enemy(id, x, y, speed, src, width, height);
+    enemyList[id] = enemy;
+  }
+  addEnemy(1, 50, 0, 5, "img/enemy1.png", 28, 35);
+  addEnemy(2, 150, 0, 3, "img/enemy2.png", 45, 35);
+  addEnemy(3, 250, 0, 2, "img/boss.png", 106, 104);
 
   // this is the function to update entity (entity could be player, could enemy1)
   function updateEntity(entity){
@@ -75,9 +83,10 @@
     ctx.clearRect(0, 0, WIDTH, HEIGHT); // this is to clean up everything
     ctx.drawImage(img_background, 0, 0, WIDTH, HEIGHT);
     updateEntity(player);
-    updateEntity(enemy1);
-    updateEntity(enemy2);
-    updateEntity(enemy3);
+    // you need to learn how to loop through enemyList
+    for(var id in enemyList){
+      updateEntity(enemyList[id]);
+    }
   }
 </script>
 
