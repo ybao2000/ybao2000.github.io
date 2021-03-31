@@ -62,6 +62,20 @@
   addEnemy(2, 150, 0, 3, "img/enemy2.png", 45, 35);
   addEnemy(3, 250, 0, 2, "img/boss.png", 106, 104);
 
+  function checkCollision(entity1, entity2){
+    var left1 = entity1.x;
+    var top1 = entity1.y;
+    var right1 = entity1.x + entity1.width;
+    var bottom1 = entity1.y + entity1.height;
+    var left2 = entity2.x;
+    var top2 = entity2.y;
+    var right2 = entity2.x + entity2.width;
+    var bottom2 = entity2.y + entity2.height;
+    return (left1 > left2 && left1 < right2 && top1 > top2 && top1 < bottom2) ||
+           (right1 > left2 && right1 < right2 && top1 > top2 && top1 < bottom2) ||
+           (left1 > left2 && left1 < right2 && bottom1 > top2 && bottom1 < bottom2) ||
+           (right1 > left2 && right1 < right2 && bottom1 > top2 && bttom1 < bottom2);
+  }
   // this is the function to update entity (entity could be player, could enemy1)
   function updateEntity(entity){
     entity.y += entity.speed;
