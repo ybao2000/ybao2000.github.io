@@ -54,6 +54,28 @@
     img: Image
   }
 
+  // enmey2
+  var enemy2 = {
+    x: 150,
+    y: 0,
+    src: "img/enemy2.png",
+    width: 45,
+    height: 35,
+    speed: 3,
+    img: Image
+  }
+
+  // enmey3
+  var enemy3 = {
+    x: 250,
+    y: 0,
+    src: "img/boss.png",
+    width: 106,
+    height: 104,
+    speed: 2,
+    img: Image
+  }
+
   // this is the function to initialize entity
   function initEntity(entity){
     entity.img = new Image();
@@ -65,10 +87,20 @@
 
   initEntity(player);
   initEntity(enemy1);
+  initEntity(enemy2);
+  initEntity(enemy3);
 
   // this is the function to update entity (entity could be player, could enemy1)
   function updateEntity(entity){
     entity.y += entity.speed;
+    // if your plane is out of boundary, reset it to the bottom
+    if (entity.y < 0) {
+      entity.y = HEIGHT;
+    }
+    // if your enemy is out of boundray, also reset it to the top
+    else if (entity.y > HEIGHT){
+      entity.y = 0;
+    }
     ctx.drawImage(entity.img, entity.x, entity.y, entity.width, entity.height);
   }
 
@@ -76,6 +108,8 @@
   setInterval(update, 40);  // 40 milli-seconds, 1 second = 1000 ms, 1 sec => 25 times
 
   function update() {
+    ctx.clearRect(0, 0, WIDTH, HEIGHT); // this is to clean up everything
+    ctx.drawImage(img_background, 0, 0, WIDTH, HEIGHT);
     // update player
     // y_player -= 50;
     // ctx.drawImage(img_player, x_player, y_player, 60, 40);
@@ -84,6 +118,8 @@
     // y_enemy1 += 50;
     // ctx.drawImage(img_enemy1, x_enemy1, y_enemy1, 60, 40);
     updateEntity(enemy1);
+    updateEntity(enemy2);
+    updateEntity(enemy3);
   }
 </script>
 
