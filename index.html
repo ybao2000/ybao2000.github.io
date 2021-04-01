@@ -65,13 +65,21 @@
     }
   }
   var enemyList = {};
-  function addEnemy(id, type, x, y, speed){
+
+  // we are going to randomly generate the enmey
+  function addRandomEnemy(){
+    var id = Math.random();
+    var type = Math.floor(Math.random() * 3) + 1;
+    var x = WIDTH * Math.random();
+    var y = HEIGHT * Math.random();
+    var speed = Math.random() * 9 + 1;
     var enemy = new Enemy(id, type, x, y, speed);
     enemyList[id] = enemy;
   }
-  addEnemy(1, 1, 50, 0, 5);
-  addEnemy(2, 2, 150, 0, 3);
-  addEnemy(3, 3, 250, 0, 2,);
+  
+  addRandomEnemy();
+  addRandomEnemy();
+  addRandomEnemy();
 
   function checkCollision(entity1, entity2){
     var left1 = entity1.x;
