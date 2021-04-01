@@ -195,6 +195,16 @@
       else {
         // we need to destroy the bullet
         delete bullet;
+        continue;
+      }
+      // check bullet with enemeies
+      for(var id2 in enemyList){
+        enemy = enemyList[id2];
+        if(checkCollision(bullet, enemy)){
+          delete enemyList[id2];
+          delete bulletList[id];
+          break;
+        }
       }
     }
 
