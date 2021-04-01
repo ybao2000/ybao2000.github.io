@@ -7,7 +7,8 @@
 <!-- we are using javascript -->
 <script>
   // we get the context from html
-  var ctx = document.getElementById("canvas").getContext("2d");
+  var canvas = document.getElementById("canvas");
+  var ctx = canvas.getContext("2d");
   var WIDTH = 400;
   var HEIGHT = 500;
 
@@ -105,8 +106,25 @@
 
   // we are going to update Player using mouse
   document.onmousemove = function(mouse) {
-    player.x = mouse.clientX;
-    player.y = mouse.clientY;
+    mouseX = mouse.clientX - canvas.getBoundingClientRect().left;
+    mouseY = mouse.clientY - canvas.getBoundingClientRect().top;
+
+    //makesure mouseX, mouseY are always inside the canvas
+    if(mouseX < player.width/2){
+      mouseX = player.width/2;
+    }
+    else if (mouseX > WIDTH - player.width/2){
+      mouseX = WIDTH - player.width/2;
+    }
+    if (mouseY < player.height/2){
+      mouseY = player.height/2;
+    }
+    else if(mouseY > HEIGHT - player.height/2){
+      mouseY = HEIGHT - player.height/2;
+    }
+
+    player.x = mouseX - player.width/2;
+    player.y = mouseY - player.height/2;
   }
 
   // we need to move the player and enemy1
