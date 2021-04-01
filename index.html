@@ -97,7 +97,7 @@
   var bulletList = {};
   function addBullet(){
     var id = Math.random();
-    var x = player.x;
+    var x = player.x + player.width/2;
     var y = player.y;
     var bullet = new Bullet(id, x, y, 10);
     bulletList[id] = bullet;
@@ -203,15 +203,25 @@
 
     for(var id in bulletList){
       var bullet = bulletList[id];
-      bullet.updatePosition();
-      bullet.draw();
+      if(bullet.updatePosition()){
+        bullet.draw();
+      }
+      else {
+        // we need to destroy the bullet
+        delete bullet;
+      }
     }
 
     // you need to learn how to loop through enemyList
     for(var id in enemyList){
       var enemy = enemyList[id];
-      enemy.updatePosition();
-      enemy.draw();
+      if(enemy.updatePosition()){
+        enemy.draw();
+      }
+      else{
+        delete enemy;
+        continue;   // continue means don't execute the afterwards code
+      }
       
       if(checkCollision(enemyList[id], player)){
         console.log("Collision!")
