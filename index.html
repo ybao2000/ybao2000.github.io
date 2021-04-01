@@ -1,9 +1,16 @@
 <!-- html is the some markups -->
 <html>
-  <canvas id="canvas" width="400" height="500" style="border: 1px solid black;"></canvas>
-</html>
-
-<!-- script is the place we write the code -->
+  <head>
+    <meta name="viewport" content="width=device-width, intial-scale=1.0"/>
+  </head>
+  <body>
+    <canvas id="canvas" width="400" height="500" style="border: 1px solid black;"></canvas>
+    <!-- we are going to add music -->
+    <audio loop id="background_music" controls>
+      <source src="music/game_music.mp3">
+    </audio>
+    <button id="btnStart">Start</button>
+    <!-- script is the place we write the code -->
 <!-- we are using javascript -->
 <script>
   // we get the context from html
@@ -201,6 +208,7 @@
       for(var id2 in enemyList){
         enemy = enemyList[id2];
         if(checkCollision(bullet, enemy)){
+          score += 1;
           delete enemyList[id2];
           delete bulletList[id];
           break;
@@ -233,4 +241,6 @@
     player.draw();
   }
 </script>
+  </body>
+</html>
 
