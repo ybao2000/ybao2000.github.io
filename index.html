@@ -38,30 +38,40 @@
   var player = new Player(0, 180, HEIGHT, -5, "img/player.png", 60, 40);
 
   class Enemy {
-    constructor(id, x, y, speed, src, width, height){
+    constructor(id,type, x, y, speed){
       this.id = id;
       this.x = x;
       this.y = y;
       this.speed = speed;
-      this.width = width;
-      this.height = height;
-      // we need to convert src into image
-      this.img = new Image();
-      this.img.src = src;
+      // type 1: enemy 1, type 2: enemy 2, type 3: boss
+      if (type == 1){
+        this.width = 28;
+        this.height = 35;
+        this.img = new Image();
+        this.img.src = "img/enemy1.png";      
+      }
+      else if (type == 2){
+        this.width = 45;
+        this.height = 35;
+        this.img = new Image();
+        this.img.src = "img/enemy2.png";           
+      }
+      else {  // type 3
+        this.width = 106;
+        this.height = 104;
+        this.img = new Image();
+        this.img.src = "img/boss.png";  
+      }
     }
   }
-  // var enemy1 = new Enemy(1, 50, 0, 5, "img/enemy1.png", 28, 35);
-  // var enemy2 = new Enemy(2, 150, 0, 3, "img/enemy2.png", 45, 35);
-  // var enemy3 = new Enemy(3, 250, 0, 2, "img/boss.png", 106, 104);
   var enemyList = {};
-
-  function addEnemy(id, x, y, speed, src, width, height){
-    var enemy = new Enemy(id, x, y, speed, src, width, height);
+  function addEnemy(id, type, x, y, speed){
+    var enemy = new Enemy(id, type, x, y, speed);
     enemyList[id] = enemy;
   }
-  addEnemy(1, 50, 0, 5, "img/enemy1.png", 28, 35);
-  addEnemy(2, 150, 0, 3, "img/enemy2.png", 45, 35);
-  addEnemy(3, 250, 0, 2, "img/boss.png", 106, 104);
+  addEnemy(1, 1, 50, 0, 5);
+  addEnemy(2, 2, 150, 0, 3);
+  addEnemy(3, 3, 250, 0, 2,);
 
   function checkCollision(entity1, entity2){
     var left1 = entity1.x;
