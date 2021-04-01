@@ -13,6 +13,7 @@
   var HEIGHT = 500;
   var score = 0;    // this is going to be the score you made
   var frameCount = 0; // this is to count of frames, because we need this to add more enemies
+  var isLost = false;
 
   // draw background
   var img_background = new Image();
@@ -35,9 +36,10 @@
       this.img = new Image();
       this.img.src = src;
     }
+    draw() {
+      ctx.drawImage(this.img, this.x, this.y, this.width, this.height);     
+    }
   }
-
-  var player = new Player(0, 180, HEIGHT, -5, "img/player.png", 60, 40);
 
   class Enemy {
     constructor(id,type, x, y, speed){
@@ -93,8 +95,7 @@
       ctx.drawImage(this.img, this.x, this.y, this.width, this.height);     
     } 
   }
-
-  var bulletList = {};
+  
   function addBullet(){
     var id = Math.random();
     var x = player.x + player.width/2;
@@ -102,9 +103,6 @@
     var bullet = new Bullet(id, x, y, 10);
     bulletList[id] = bullet;
   }
-
-  var enemyList = {};
-
   // we are going to randomly generate the enmey
   function addRandomEnemy(){
     var id = Math.random();
@@ -115,11 +113,7 @@
     var enemy = new Enemy(id, type, x, y, speed);
     enemyList[id] = enemy;
   }
-
-  addRandomEnemy();
-  addRandomEnemy();
-  addRandomEnemy();
-
+  
   function checkCollision(entity1, entity2){
     var left1 = entity1.x;
     var top1 = entity1.y;
@@ -139,30 +133,8 @@
            (right2 > left1 && right2 < right1 && bottom2 > top1 && bottom2 < bottom1);
   }
   
-  function updateEntityPosition(entity){
-    entity.y += entity.speed;
-    // if your plane is out of boundary, reset it to the bottom
-    if (entity.y < 0) {
-      entity.y = HEIGHT;
-    }
-    // if your enemy is out of boundray, also reset it to the top
-    else if (entity.y > HEIGHT){
-      entity.y = 0;
-    }
-  }
-
-  function drawEntity(entity){
-    ctx.drawImage(entity.img, entity.x, entity.y, entity.width, entity.height);
-  }
-
-// this is the function to update entity (entity could be player, could enemy1)
-  function updateEntity(entity){
-    updateEntityPosition(entity);
-    drawEntity(entity);
-  }
-
-  // we are going to update Player using mouse
-  document.onmousemove = function(mouse) {
+    // we are going to update Player using mouse
+    document.onmousemove = function(mouse) {
     mouseX = mouse.clientX - canvas.getBoundingClientRect().left;
     mouseY = mouse.clientY - canvas.getBoundingClientRect().top;
 
@@ -184,14 +156,28 @@
     player.y = mouseY - player.height/2;
   }
 
+  var player = new Player(0, 180, HEIGHT, -5, "img/player.png", 60, 40);
+  var bulletList = {};
+  var enemyList = {};
+
   // we need to move the player and enemy1
   setInterval(update, 40);  // 40 milli-seconds, 1 second = 1000 ms, 1 sec => 25 times
+  // we use isLost to check if the player collides with enemey
 
+  // we are going to use startNewGame() to reset every thing
+  function startNewGame(){
+    isLost = false;
+    frameCount = 0;
+    score = 0;
+    enemyList = {}; // reset enemey list
+    bulletList = {};  // reset bullet list
+  }
+  
   function update() {
     ctx.clearRect(0, 0, WIDTH, HEIGHT); // this is to clean up everything
     ctx.drawImage(img_background, 0, 0, WIDTH, HEIGHT);
     frameCount++;   // every time update, just increate frameCount by 1
-    if (frameCount % 100 === 0)   // if frameCount = 100, 200, 300, ..., add enemy, every 4 secs
+    if (frameCount % 20 === 0)   // if frameCount = 100, 200, 300, ..., add enemy, every 4 secs
     {
       addRandomEnemy();
     }
@@ -223,11 +209,18 @@
         continue;   // continue means don't execute the afterwards code
       }
       
+      // if player collides with enemey, stop the game
       if(checkCollision(enemyList[id], player)){
-        console.log("Collision!")
+        // console.log("Collision!")
+        isLost = true;
+        break;
       }
     }
-    drawEntity(player);
+    if (isLost) {
+      alert("You lose!");
+      startNewGame();
+    }
+    player.draw();
   }
 </script>
 
