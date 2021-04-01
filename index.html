@@ -96,11 +96,17 @@
   function drawEntity(entity){
     ctx.drawImage(entity.img, entity.x, entity.y, entity.width, entity.height);
   }
-  
+
 // this is the function to update entity (entity could be player, could enemy1)
   function updateEntity(entity){
     updateEntityPosition(entity);
     drawEntity(entity);
+  }
+
+  // we are going to update Player using mouse
+  document.onmousemove = function(mouse) {
+    player.x = mouse.clientX;
+    player.y = mouse.clientY;
   }
 
   // we need to move the player and enemy1
@@ -109,7 +115,6 @@
   function update() {
     ctx.clearRect(0, 0, WIDTH, HEIGHT); // this is to clean up everything
     ctx.drawImage(img_background, 0, 0, WIDTH, HEIGHT);
-    updateEntity(player);
     // you need to learn how to loop through enemyList
     for(var id in enemyList){
       updateEntity(enemyList[id]);
@@ -117,6 +122,7 @@
         console.log("Collision!")
       }
     }
+    drawEntity(player);
   }
 </script>
 
