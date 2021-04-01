@@ -80,6 +80,15 @@
     }
   }
 
+  var bulletList = {};
+  function addBullet(){
+    var id = Math.random();
+    var x = player.x;
+    var y = player.y;
+    var bullet = new Bullet(id, x, y, -10);
+    bulletList[id] = bullet;
+  }
+
   var enemyList = {};
 
   // we are going to randomly generate the enmey
@@ -172,6 +181,16 @@
     {
       addRandomEnemy();
     }
+
+    if (frameCount % 10 === 0) // every 10 updates, we shoot bullet
+    {
+      addBullet();
+    }
+
+    for(var id in bulletList){
+      updateEntity(bulletList[id]);
+    }
+
     // you need to learn how to loop through enemyList
     for(var id in enemyList){
       updateEntity(enemyList[id]);
