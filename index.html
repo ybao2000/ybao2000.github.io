@@ -65,6 +65,13 @@
         this.img.src = "img/boss.png";  
       }
     }
+    updatePosition() {
+      this.y += this.speed;
+      return this.y <= HEIGHT;
+    }
+    draw() {
+      ctx.drawImage(this.img, this.x, this.y, this.width, this.height);     
+    }
   }
 
   class Bullet {
@@ -78,6 +85,13 @@
       this.img = new Image();
       this.img.src = "img/bullet.png";
     }
+    updatePosition() {
+      this.y -= this.speed;
+      return this.y >= 0;
+    }   
+    draw() {
+      ctx.drawImage(this.img, this.x, this.y, this.width, this.height);     
+    } 
   }
 
   var bulletList = {};
@@ -85,7 +99,7 @@
     var id = Math.random();
     var x = player.x;
     var y = player.y;
-    var bullet = new Bullet(id, x, y, -10);
+    var bullet = new Bullet(id, x, y, 10);
     bulletList[id] = bullet;
   }
 
@@ -188,12 +202,17 @@
     }
 
     for(var id in bulletList){
-      updateEntity(bulletList[id]);
+      var bullet = bulletList[id];
+      bullet.updatePosition();
+      bullet.draw();
     }
 
     // you need to learn how to loop through enemyList
     for(var id in enemyList){
-      updateEntity(enemyList[id]);
+      var enemy = enemyList[id];
+      enemy.updatePosition();
+      enemy.draw();
+      
       if(checkCollision(enemyList[id], player)){
         console.log("Collision!")
       }
