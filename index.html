@@ -127,11 +127,11 @@
       return this.y <= HEIGHT;
     }
     draw() {
-      ctx.drawImage(this.img, this.x, this.y, this.width, this.height);     
+      ctx.drawImage(this.imgList[this.hp_max-this.hp], this.x, this.y, this.width, this.height);     
     }
   }
 
-  class Enemey1 extends Enemy {
+  class Enemy1 extends Enemy {
     constructor(id, x, y, speed){
       super(id, 1, x, y, speed);
       this.width = 28;
@@ -143,7 +143,7 @@
     }
   }
 
-  class Enemey2 extends Enemy {
+  class Enemy2 extends Enemy {
     constructor(id, x, y, speed){
       super(id, 2, x, y, speed);
       this.width = 45;
@@ -200,8 +200,15 @@
     var id = Math.random();
     var type = Math.floor(Math.random() * 3) + 1;
     var x = WIDTH * Math.random();
-    var speed = Math.random() * 9 + 1;
-    var enemy = new Enemy(id, type, x, 0, speed);
+    if (type === 1){
+      enemy = new Enemy1(id, x, 0, 5);
+    }
+    else if(type === 2){
+      enemy = new Enemy2(id, x, 0, 3);
+    }
+    else {
+      enemy = new Boss(id, x, 0, 2);
+    }
     enemyList[id] = enemy;
   }
   
