@@ -251,6 +251,7 @@ document.onmousemove = function(mouse) {
 }
 
 var background = new Background();
+// background.draw();
 var player = new Player(0, 180, HEIGHT);
 var bulletList = {};
 var enemyList = {};
@@ -306,7 +307,7 @@ function update() {
   for(var id in enemyList){
     var enemy = enemyList[id];
     if(enemy.hp <= 0){
-      var newScore = score + enemey.score;
+      var newScore = score + enemy.score;
       if (score < scoreLevel && newScore > scoreLevel){
         level++;
         scoreLevel += 50;
