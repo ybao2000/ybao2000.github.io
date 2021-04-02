@@ -197,13 +197,13 @@ function addRandomEnemy(){
   var x = WIDTH * Math.random();
   var num = Math.floor(Math.random() * 10) + 1;
   if (num <= 5){  // if num = 1, 2, 3, 4, 5
-    enemy = new Enemy1(id, x, 0, 5);
+    enemy = new Enemy1(id, x, 0, 5+level);
   }
   else if(num <= 8){  // if num = 6, 7, 8
-    enemy = new Enemy2(id, x, 0, 3);
+    enemy = new Enemy2(id, x, 0, 3+level);
   }
   else {  // if num = 9, 10
-    enemy = new Boss(id, x, 0, 2);
+    enemy = new Boss(id, x, 0, 2+level);
   }
   enemyList[id] = enemy;
 }
@@ -269,7 +269,7 @@ function update() {
   ctx.clearRect(0, 0, WIDTH, HEIGHT); // this is to clean up everything
   background.update();
   frameCount++;   // every time update, just increate frameCount by 1
-  if (frameCount % 100 === 0)   // if frameCount = 100, 200, 300, ..., add enemy, every 4 secs
+  if (frameCount % (55-5*level) === 0)   // if frameCount = 100, 200, 300, ..., add enemy, every 4 secs
   {
     addRandomEnemy();
   }
@@ -306,7 +306,12 @@ function update() {
   for(var id in enemyList){
     var enemy = enemyList[id];
     if(enemy.hp <= 0){
-      score += enemy.score;
+      var newScore = score + enemey.score;
+      if (score < scoreLevel && newScore > scoreLevel){
+        level++;
+        scoreLevel += 50;
+      }
+      score = newScore;
       delete enemyList[id];
       continue;
     }
