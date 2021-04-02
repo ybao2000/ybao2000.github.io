@@ -107,6 +107,9 @@ class Enemy {
     this.x = x;
     this.y = y;
     this.speed = speed;
+  }
+
+  adjustPosition() {
     // we adjust the x, don't let x to be too left, or too right
     if (this.x < this.width){
       this.x = this.width;
@@ -133,6 +136,7 @@ class Enemy1 extends Enemy {
     this.hp = 1;  
     this.hp_max = 1;
     this.score = 1; 
+    this.adjustPosition();
   }
 }
 
@@ -145,6 +149,7 @@ class Enemy2 extends Enemy {
     this.hp = 4;  
     this.hp_max = 4;
     this.score = 5; 
+    this.adjustPosition();
   }
 }
 
@@ -157,6 +162,7 @@ class Boss extends Enemy {
     this.hp = 6;  
     this.hp_max = 6;
     this.score = 10; 
+    this.adjustPosition();
   }
 }
 
@@ -251,7 +257,6 @@ document.onmousemove = function(mouse) {
 }
 
 var background = new Background();
-// background.draw();
 var player = new Player(0, 180, HEIGHT);
 var bulletList = {};
 var enemyList = {};
@@ -354,4 +359,8 @@ function onStart() {
 
   startNewGame();
   myInterval = setInterval(update, 40);  // 40 milli-seconds, 1 second = 1000 ms, 1 sec => 25 times
+}
+
+background.img.onload = function() {
+  background.draw();
 }
