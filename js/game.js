@@ -345,7 +345,7 @@ function update() {
     ctx.fillText("Game over!", 120, 300);
     ctx.restore();
     btnStart.style.display = "block";
-    log.style.display = "block";
+    logo.style.display = "block";
   }
   else{
     player.draw();
