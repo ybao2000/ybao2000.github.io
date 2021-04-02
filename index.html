@@ -67,7 +67,7 @@
   img_boss_6 = new Image();
   img_boss_6.src = "img/boss_6.png";
   imgList_boss.push(img_boss_6);
-  imgList_boss.push(img_exp);
+  imgList_boss.push(img_explosion);
 
   class Background {
     constructor() {
@@ -114,31 +114,6 @@
       this.x = x;
       this.y = y;
       this.speed = speed;
-      // type 1: enemy 1, type 2: enemy 2, type 3: boss
-      if (type == 1){
-        this.width = 28;
-        this.height = 35;
-        this.img = new Image();
-        this.img.src = "img/enemy1.png";  
-        this.hp = 1;  
-        this.score = 1;  
-      }
-      else if (type == 2){
-        this.width = 45;
-        this.height = 35;
-        this.img = new Image();
-        this.img.src = "img/enemy2.png";
-        this.hp = 4;  
-        this.score = 5;    
-      }
-      else {  // type 3
-        this.width = 106;
-        this.height = 104;
-        this.img = new Image();
-        this.img.src = "img/boss.png";
-        this.hp = 6;
-        this.score = 10;
-      }
       // we adjust the x, don't let x to be too left, or too right
       if (this.x < this.width){
         this.x = this.width;
@@ -156,6 +131,42 @@
     }
   }
 
+  class Enemey1 extends Enemy {
+    constructor(id, x, y, speed){
+      super(id, 1, x, y, speed);
+      this.width = 28;
+      this.height = 35;
+      this.imgList = imgList_enemy1;
+      this.hp = 1;  
+      this.hp_max = 1;
+      this.score = 1; 
+    }
+  }
+
+  class Enemey2 extends Enemy {
+    constructor(id, x, y, speed){
+      super(id, 2, x, y, speed);
+      this.width = 45;
+      this.height = 35;
+      this.imgList = imgList_enemy2;
+      this.hp = 4;  
+      this.hp_max = 4;
+      this.score = 5; 
+    }
+  }
+  
+  class Boss extends Enemy {
+    constructor(id, x, y, speed){
+      super(id, 3, x, y, speed);
+      this.width = 106;
+      this.height = 104;
+      this.imgList = imgList_boss;
+      this.hp = 6;  
+      this.hp_max = 6;
+      this.score = 10; 
+    }
+  }
+  
   class Bullet {
     constructor(id, x, y, speed){
       this.id = id;
