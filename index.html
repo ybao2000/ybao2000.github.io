@@ -6,10 +6,10 @@
   <body>
     <canvas id="canvas" width="400" height="500" style="border: 1px solid black;"></canvas>
     <!-- we are going to add music -->
-    <audio loop id="background_music" controls>
+    <audio loop id="background_music">
       <source src="music/game_music.mp3">
     </audio>
-    <button id="btnStart">Start</button>
+    <button id="btnStart" onclick="onStart()">Start</button>
     <!-- script is the place we write the code -->
 <!-- we are using javascript -->
 <script>
@@ -73,6 +73,13 @@
         this.img = new Image();
         this.img.src = "img/boss.png";  
       }
+      // we adjust the x, don't let x to be too left, or too right
+      if (this.x < this.width){
+        this.x = this.width;
+      }
+      else if(this.x > WIDTH - this.width){
+        this.x = WIDTH - this.width;
+      }
     }
     updatePosition() {
       this.y += this.speed;
@@ -115,9 +122,8 @@
     var id = Math.random();
     var type = Math.floor(Math.random() * 3) + 1;
     var x = WIDTH * Math.random();
-    var y = HEIGHT * Math.random();
     var speed = Math.random() * 9 + 1;
-    var enemy = new Enemy(id, type, x, y, speed);
+    var enemy = new Enemy(id, type, x, 0, speed);
     enemyList[id] = enemy;
   }
   
@@ -140,8 +146,8 @@
            (right2 > left1 && right2 < right1 && bottom2 > top1 && bottom2 < bottom1);
   }
   
-    // we are going to update Player using mouse
-    document.onmousemove = function(mouse) {
+  // we are going to update Player using mouse
+  document.onmousemove = function(mouse) {
     mouseX = mouse.clientX - canvas.getBoundingClientRect().left;
     mouseY = mouse.clientY - canvas.getBoundingClientRect().top;
 
@@ -166,10 +172,6 @@
   var player = new Player(0, 180, HEIGHT, -5, "img/player.png", 60, 40);
   var bulletList = {};
   var enemyList = {};
-
-  // we need to move the player and enemy1
-  setInterval(update, 40);  // 40 milli-seconds, 1 second = 1000 ms, 1 sec => 25 times
-  // we use isLost to check if the player collides with enemey
 
   // we are going to use startNewGame() to reset every thing
   function startNewGame(){
@@ -201,7 +203,7 @@
       }
       else {
         // we need to destroy the bullet
-        delete bullet;
+        delete bulletList[id];
         continue;
       }
       // check bullet with enemeies
@@ -239,6 +241,11 @@
       startNewGame();
     }
     player.draw();
+  }
+
+  function onStart() {
+    startNewGame();
+    setInterval(update, 40);  // 40 milli-seconds, 1 second = 1000 ms, 1 sec => 25 times
   }
 </script>
   </body>
