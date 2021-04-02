@@ -24,12 +24,51 @@
   var background_music = document.getElementById("background_music");
   var btnStart = document.getElementById("btnStart");
 
-  // draw background
-  // var img_background = new Image();
-  // img_background.src = "img/background1.jpg";
-  // img_background.onload = function() {
-  //   ctx.drawImage(img_background, 0, 0, WIDTH, HEIGHT);
-  // }
+  // this is the list for enemy1
+  var imgList_enemy1 = [];
+  img_enemy1 = new Image();
+  img_enemy1.src = "img/enemy1.png";
+  imgList_enemy1.push(img_enemy1);
+  img_explosion = new Image();
+  img_explosion.src = "img/explosion_effect2.png";
+  imgList_enemy1.push(img_explosion);
+
+  var imgList_enemy2 = [];
+  img_enemy2 = new Image();
+  img_enemy2.src = "img/enemy2.png";
+  imgList_enemy2.push(img_enemy2);
+  img_enemy2_2 = new Image();
+  img_enemy2_2.src = "img/enemy2_2.png";
+  imgList_enemy2.push(img_enemy2_2);
+  img_enemy2_3 = new Image();
+  img_enemy2_3.src = "img/enemy2_3.png";
+  imgList_enemy2.push(img_enemy2_3);
+  img_enemy2_4 = new Image();
+  img_enemy2_4.src = "img/enemy2_4.png";
+  imgList_enemy2.push(img_enemy2_4);  
+  imgList_enemy2.push(img_explosion);
+
+  imgList_boss = [];
+  img_boss = new Image();
+  img_boss.src = "img/boss.png";
+  imgList_boss.push(img_boss);
+  img_boss_2 = new Image();
+  img_boss_2.src = "img/boss_2.png";
+  imgList_boss.push(img_boss_2);
+  img_boss_3 = new Image();
+  img_boss_3.src = "img/boss_3.png";
+  imgList_boss.push(img_boss_3);
+  img_boss_4 = new Image();
+  img_boss_4.src = "img/boss_4.png";
+  imgList_boss.push(img_boss_4);
+  img_boss_5 = new Image();
+  img_boss_5.src = "img/boss_5.png";
+  imgList_boss.push(img_boss_5);
+  img_boss_6 = new Image();
+  img_boss_6.src = "img/boss_6.png";
+  imgList_boss.push(img_boss_6);
+  imgList_boss.push(img_exp);
+
   class Background {
     constructor() {
       this.img = new Image();
@@ -54,16 +93,15 @@
   // we are going to define a Player class
   class Player {
     // you need a constructor
-    constructor(id, x, y, speed, src, width, height){
+    constructor(id, x, y){
       this.id = id;
       this.x = x;
       this.y = y;
-      this.speed = speed;
-      this.width = width;
-      this.height = height;
+      this.width = 60;
+      this.height = 40;
       // we need to convert src into image
       this.img = new Image();
-      this.img.src = src;
+      this.img.src = "img/player.png";
     }
     draw() {
       ctx.drawImage(this.img, this.x, this.y, this.width, this.height);     
@@ -199,7 +237,7 @@
   }
 
   var background = new Background();
-  var player = new Player(0, 180, HEIGHT, -5, "img/player.png", 60, 40);
+  var player = new Player(0, 180, HEIGHT);
   var bulletList = {};
   var enemyList = {};
 
