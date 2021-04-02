@@ -255,7 +255,7 @@
       var enemy = enemyList[id];
       if(enemy.hp <= 0){
         score += enemy.score;
-        delete enemeyList[id];
+        delete enemyList[id];
         continue;
       }
       if(enemy.updatePosition()){
@@ -273,6 +273,7 @@
         break;
       }
     }
+    
     if (isLost) {
       background_music.pause();
       alert("You lose!");
