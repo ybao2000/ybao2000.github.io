@@ -1,13 +1,21 @@
 // we get the context from html
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
+ctx.font = "30px Arial";
+ctx.fillStyle = "white";
+var myInterval;
 var WIDTH = 400;
 var HEIGHT = 500;
 var score = 0;    // this is going to be the score you made
 var frameCount = 0; // this is to count of frames, because we need this to add more enemies
 var isLost = false;
 var background_music = document.getElementById("background_music");
+var bullet_music = document.getElementById("bullet_music");
 var btnStart = document.getElementById("btnStart");
+var logo = document.getElementById("logo");
+var level = 0;
+var scoreLevel = 50;
+var start = true;
 
 // this is the list for enemy1
 var imgList_enemy1 = [];
@@ -177,21 +185,24 @@ function addBullet(){
   var x = player.x + player.width/2;
   var y = player.y;
   var bullet = new Bullet(id, x, y, 10);
+  bullet_music.muted = false;
+  bullet_music.currentTime =0;
+  bullet_music.play();
   bulletList[id] = bullet;
 }
 // we are going to randomly generate the enmey
 // probability - enemy1 appear frequently, enemy2, boss
 function addRandomEnemy(){
   var id = Math.random();
-  var type = Math.floor(Math.random() * 3) + 1;
   var x = WIDTH * Math.random();
-  if (type === 1){
+  var num = Math.floor(Math.random() * 10) + 1;
+  if (num <= 5){  // if num = 1, 2, 3, 4, 5
     enemy = new Enemy1(id, x, 0, 5);
   }
-  else if(type === 2){
+  else if(num <= 8){  // if num = 6, 7, 8
     enemy = new Enemy2(id, x, 0, 3);
   }
-  else {
+  else {  // if num = 9, 10
     enemy = new Boss(id, x, 0, 2);
   }
   enemyList[id] = enemy;
@@ -251,7 +262,7 @@ function startNewGame(){
   score = 0;
   enemyList = {}; // reset enemey list
   bulletList = {};  // reset bullet list
-  // background_music.play();
+  background_music.play();
 }
 
 function update() {
@@ -316,14 +327,25 @@ function update() {
   }
   
   if (isLost) {
+    clearInterval(myInterval);
     background_music.pause();
-    alert("You lose!");
-    startNewGame();
+    ctx.save();
+    ctx.fillStyle = "red";
+    ctx.fillText("Game over!", 120, 300);
+    ctx.restore();
+    btnStart.style.display = "block";
+    log.style.display = "block";
   }
-  player.draw();
+  else{
+    player.draw();
+  }
+  ctx.fillText("score: " + score, 150, 25);
 }
 
 function onStart() {
+  logo.style.display = "none";
+  btnStart.style.display = "none";
+
   startNewGame();
-  setInterval(update, 40);  // 40 milli-seconds, 1 second = 1000 ms, 1 sec => 25 times
+  myInterval = setInterval(update, 40);  // 40 milli-seconds, 1 second = 1000 ms, 1 sec => 25 times
 }
